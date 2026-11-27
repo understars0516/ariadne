@@ -1,0 +1,478 @@
+{
+  "goal": "explain",
+  "outcome": "post_score",
+  "generated_from": "C:\\Users\\NiSl\\AppData\\Local\\Temp\\ariadne_examples",
+  "evidence_summary": {
+    "confirmed": [
+      {
+        "family": "outcome::post_score",
+        "pair": "post_score ~ site",
+        "method": "Kruskal-Wallis H (non-normal groups)",
+        "p": 0.0,
+        "p_fdr": 0.0,
+        "effect": 0.23961576630651146,
+        "effect_kind": "epsilon2",
+        "n": 411
+      },
+      {
+        "family": "outcome::post_score",
+        "pair": "post_score ~ adherence",
+        "method": "Pearson r (monotonic check: Spearman)",
+        "p": 2.6370438401392977e-06,
+        "p_fdr": 1.2306204587316722e-05,
+        "effect": -0.22930166205610375,
+        "effect_kind": "r",
+        "n": 411
+      },
+      {
+        "family": "outcome::post_score",
+        "pair": "post_score ~ baseline_score",
+        "method": "Pearson r (monotonic check: Spearman)",
+        "p": 0.00010602950826084718,
+        "p_fdr": 0.00037110327891296517,
+        "effect": 0.19004039672122633,
+        "effect_kind": "r",
+        "n": 411
+      },
+      {
+        "family": "all_pairs",
+        "pair": "site ~ post_score",
+        "method": "Kruskal-Wallis H (non-normal groups)",
+        "p": 0.0,
+        "p_fdr": 0.0,
+        "effect": 0.23961576630651146,
+        "effect_kind": "epsilon2",
+        "n": 411
+      },
+      {
+        "family": "all_pairs",
+        "pair": "site ~ change_score",
+        "method": "Kruskal-Wallis H (non-normal groups)",
+        "p": 0.0,
+        "p_fdr": 0.0,
+        "effect": 0.26845012453537836,
+        "effect_kind": "epsilon2",
+        "n": 411
+      },
+      {
+        "family": "all_pairs",
+        "pair": "arm ~ adherence",
+        "method": "One-way ANOVA",
+        "p": 3.312403493949446e-09,
+        "p_fdr": 8.695059171617296e-08,
+        "effect": 0.09546802464351543,
+        "effect_kind": "eta2",
+        "n": 426
+      },
+      {
+        "family": "all_pairs",
+        "pair": "social_support ~ remission",
+        "method": "Independent samples t-test",
+        "p": 7.0114986189546e-07,
+        "p_fdr": 1.4724147099804661e-05,
+        "effect": 0.5335015302648997,
+        "effect_kind": "d",
+        "n": 426
+      },
+      {
+        "family": "all_pairs",
+        "pair": "post_score ~ adherence",
+        "method": "Pearson r (monotonic check: Spearman)",
+        "p": 2.6370438401392977e-06,
+        "p_fdr": 4.4055100673482453e-05,
+        "effect": -0.22930166205610375,
+        "effect_kind": "r",
+        "n": 411
+      },
+      {
+        "family": "all_pairs",
+        "pair": "change_score ~ adherence",
+        "method": "Pearson r (monotonic check: Spearman)",
+        "p": 2.937006711565497e-06,
+        "p_fdr": 4.4055100673482453e-05,
+        "effect": -0.22825338490472435,
+        "effect_kind": "r",
+        "n": 411
+      },
+      {
+        "family": "all_pairs",
+        "pair": "baseline_score ~ post_score",
+        "method": "Pearson r (monotonic check: Spearman)",
+        "p": 0.00010602950826084718,
+        "p_fdr": 0.0013916372959236192,
+        "effect": 0.1900403967212263,
+        "effect_kind": "r",
+        "n": 411
+      }
+    ],
+    "redundancy": [
+      {
+        "kind": "near-perfect numeric relation",
+        "a": "post_score",
+        "b": "change_score",
+        "statistic": "r = 0.9906",
+        "implication": "one is very likely derived from the other; do not treat as independent evidence"
+      }
+    ],
+    "n_confirmed": 13
+  },
+  "ideas": [
+    {
+      "generator": "G3b null effect",
+      "title": "Is the absent arm effect a true null, or an insensitive test?",
+      "question": "arm showed no detectable difference in post_score. Is that evidence of no effect, or evidence that this sample could not have detected a clinically meaningful one? What is the smallest effect these data can exclude?",
+      "evidence": [
+        {
+          "source": "scan",
+          "detail": "arm ~ post_score is not among the confirmed or raw-significant pairs; check the scan inventory for its exact estimate"
+        }
+      ],
+      "estimand": "the confidence interval for the arm effect, and the equivalence bound the data can support",
+      "analysis": {
+        "method": "report the CI and MDE; equivalence/non-inferiority test against a margin the user sets",
+        "scripts": [
+          "power.py --n",
+          "model_fit.py"
+        ],
+        "tasks": [
+          "estimate with CI",
+          "MDE at achieved N",
+          "equivalence test against the chosen margin",
+          "state what can and cannot be excluded"
+        ]
+      },
+      "required_vars": [
+        "post_score",
+        "arm"
+      ],
+      "falsification": "the CI excludes effects larger than the equivalence margin (then the null is informative)",
+      "cost": "low",
+      "caveat": "this reframes a null as a bounded estimate; it cannot prove absence of effect, only exclude effects larger than the bound",
+      "power": {
+        "n_complete": 411,
+        "mde_d_at_n": 0.39272220086217435,
+        "note": "smallest detectable |d| ≈ 0.39 at this n"
+      },
+      "assumption_risks": [],
+      "scores": {
+        "information": 5,
+        "feasibility": 3,
+        "robustness": 3,
+        "novelty": 3
+      },
+      "score": 3.7,
+      "id": "I1"
+    },
+    {
+      "generator": "G12 decision",
+      "title": "Where is the decision threshold, and how certain are we about it?",
+      "question": "If a decision is made from post_score, where is the threshold of practical consequence, how many cases sit near it, and how much would better measurement move them across it?",
+      "evidence": [
+        {
+          "source": "data inventory",
+          "detail": "outcome post_score, n=411"
+        }
+      ],
+      "estimand": "probability of crossing a decision-relevant threshold, by group; threshold sensitivity",
+      "analysis": {
+        "method": "threshold analysis / expected-value of information; ROC or CDF near the cut",
+        "scripts": [
+          "power.py",
+          "multivariate.py --roc"
+        ],
+        "tasks": [
+          "define the threshold with the user",
+          "estimate the proportion near it",
+          "sensitivity band",
+          "value of better measurement"
+        ]
+      },
+      "required_vars": [
+        "post_score"
+      ],
+      "falsification": "no plausible threshold exists, or all cases are far from it",
+      "cost": "low",
+      "caveat": "the threshold is a value judgement supplied by the user; do not invent it",
+      "power": {
+        "n_complete": 411,
+        "note": "focus is precision near the threshold"
+      },
+      "assumption_risks": [],
+      "scores": {
+        "information": 5,
+        "feasibility": 3,
+        "robustness": 3,
+        "novelty": 3
+      },
+      "score": 3.7,
+      "id": "I2"
+    },
+    {
+      "generator": "G2 boundary",
+      "title": "Does arm change the adherence → post_score association?",
+      "question": "For whom, or under what conditions, does adherence predict post_score? Is the effect stronger at some levels of arm — and is the interaction large enough to matter?",
+      "evidence": [
+        {
+          "source": "scan (FDR survivor)",
+          "detail": "post_score ~ adherence p_FDR=1.2306204587316722e-05"
+        }
+      ],
+      "estimand": "interaction coefficient for adherence × arm on post_score",
+      "analysis": {
+        "method": "moderated regression, simple slopes at mean ±1 SD, Johnson-Neyman",
+        "scripts": [
+          "model_fit.py --moderation"
+        ],
+        "tasks": [
+          "centre x and w",
+          "interaction model",
+          "simple slopes",
+          "J-N region",
+          "multiplicity across candidate moderators"
+        ]
+      },
+      "required_vars": [
+        "adherence",
+        "post_score",
+        "arm"
+      ],
+      "falsification": "interaction coefficient CI includes zero",
+      "cost": "low",
+      "caveat": "each additional moderator is a test; more than 2-3 candidates requires FDR correction and a theoretical reason for each",
+      "power": {
+        "n_complete": 411,
+        "design": "correlation",
+        "power_at_n": 0.9999911474717509,
+        "mde_r_at_n": 0.13781652125319294
+      },
+      "assumption_risks": [
+        "interaction tests need ~4x the N of a main effect for the same power"
+      ],
+      "scores": {
+        "information": 3,
+        "feasibility": 5,
+        "robustness": 3,
+        "novelty": 3
+      },
+      "score": 3.6,
+      "id": "I3"
+    },
+    {
+      "generator": "G8 prediction",
+      "title": "Can post_score be predicted well enough to be useful?",
+      "question": "Forgetting explanation for a moment: how accurately can post_score be predicted from the available variables, out of sample — and is that accurate enough to support a decision?",
+      "evidence": [
+        {
+          "source": "data inventory",
+          "detail": "12 candidate predictors, n=395"
+        }
+      ],
+      "estimand": "out-of-sample R² / RMSE",
+      "analysis": {
+        "method": "penalised regression with repeated cross-validation; calibration; no p-values",
+        "scripts": [
+          "model_fit.py (specification)",
+          "software-recipes.md (CV recipes)"
+        ],
+        "tasks": [
+          "define predictors",
+          "CV harness",
+          "penalised fit",
+          "calibration + AUC with CI",
+          "utility analysis"
+        ]
+      },
+      "required_vars": [
+        "post_score",
+        "age",
+        "education",
+        "ses_index",
+        "baseline_score",
+        "adherence",
+        "social_support",
+        "sessions_attended",
+        "satisfaction",
+        "site",
+        "arm",
+        "sex",
+        "remission"
+      ],
+      "falsification": "out-of-sample AUC CI includes 0.5 (no better than chance)",
+      "cost": "high",
+      "caveat": "events per variable ≈ 34.2; below 10 the model is over-parameterised. Prediction and explanation answer different questions — do not report these coefficients as effects",
+      "power": {
+        "n_complete": 395,
+        "events": 411,
+        "epv": 34.2,
+        "note": "prediction uses precision (CI width), not power"
+      },
+      "assumption_risks": [
+        "education has few integer levels: decide ordinal vs continuous explicitly",
+        "satisfaction has few integer levels: decide ordinal vs continuous explicitly"
+      ],
+      "scores": {
+        "information": 4,
+        "feasibility": 4.5,
+        "robustness": 4,
+        "novelty": 3
+      },
+      "score": 3.4,
+      "id": "I4"
+    },
+    {
+      "generator": "G4 shape",
+      "title": "Is the age → post_score relation non-linear (threshold or U-shaped)?",
+      "question": "The association between age and post_score is not monotonic across quintiles. Is there a threshold or an optimal range, and where?",
+      "evidence": [
+        {
+          "source": "scan (quintile shape)",
+          "detail": "quintile means: 24.81, 25.58, 22.22, 22.82, 27.97 — non-monotonic: the association changes direction or is U-shaped"
+        },
+        {
+          "source": "caveat",
+          "detail": "the linear association was NOT FDR-confirmed; curvature needs a theoretical reason"
+        }
+      ],
+      "estimand": "the shape of E[outcome | exposure]: slope below vs above a breakpoint, or the optimal range",
+      "analysis": {
+        "method": "quadratic/spline model, segmented regression for a breakpoint with CI",
+        "scripts": [
+          "model_fit.py (add polynomial/spline term)",
+          "info_scan.py (quintile means)"
+        ],
+        "tasks": [
+          "model shape terms",
+          "compare linear vs curved (F/LR)",
+          "breakpoint with CI",
+          "plot with CI band"
+        ]
+      },
+      "required_vars": [
+        "age",
+        "post_score"
+      ],
+      "falsification": "the curvature term is not significant and the linear fit is adequate",
+      "cost": "low",
+      "caveat": "the linear association itself was not significant after FDR — this idea is a specification check, not a follow-up to a confirmed effect; it will often return a flat curve",
+      "weak_evidence": true,
+      "power": {
+        "n_complete": 411,
+        "design": "correlation",
+        "power_at_n": 0.9993107657072813,
+        "mde_r_at_n": 0.13781652125319294
+      },
+      "assumption_risks": [],
+      "scores": {
+        "information": 1,
+        "feasibility": 5,
+        "robustness": 3,
+        "novelty": 3
+      },
+      "score": 2.9,
+      "id": "I5"
+    },
+    {
+      "generator": "G10 temporal",
+      "title": "Does post_score change over time — and is the change real?",
+      "question": "Does post_score trend, cycle, or step-change across enrol_date? Is any apparent change distinguishable from seasonal variation and from noise?",
+      "evidence": [
+        {
+          "source": "data inventory",
+          "detail": "date column enrol_date, n=411"
+        }
+      ],
+      "estimand": "trend per unit time; seasonal amplitude; breakpoint date and pre/post difference",
+      "analysis": {
+        "method": "decomposition (trend/seasonal/residual), segmented regression or interrupted time series",
+        "scripts": [
+          "business-analytics.md §7",
+          "info_scan.py (shape)"
+        ],
+        "tasks": [
+          "plot + smooth",
+          "decompose",
+          "test breakpoint",
+          "pre/post contrast",
+          "anomaly annotation"
+        ]
+      },
+      "required_vars": [
+        "enrol_date",
+        "post_score"
+      ],
+      "falsification": "no trend beyond seasonal variation, or the breakpoint CI includes the whole window",
+      "cost": "medium",
+      "caveat": "needs enough periods to separate trend from seasonality; with one cycle they are confounded",
+      "power": {
+        "n_complete": 411,
+        "note": "needs several full cycles for decomposition"
+      },
+      "assumption_risks": [],
+      "scores": {
+        "information": 3,
+        "feasibility": 3,
+        "robustness": 3,
+        "novelty": 3
+      },
+      "score": 2.7,
+      "id": "I6"
+    },
+    {
+      "generator": "G9 typology",
+      "title": "Are there distinct profiles, and do they differ on the outcome?",
+      "question": "Do the observations fall into distinct multivariate profiles (not just a continuous gradient), and do those profiles differ on post_score in a way that would change how they are handled?",
+      "evidence": [
+        {
+          "source": "data inventory",
+          "detail": "6 profile variables, n=426"
+        }
+      ],
+      "estimand": "number and size of profiles; between-profile difference in the outcome",
+      "analysis": {
+        "method": "k-means/mixture with k by silhouette, bootstrap stability, then outcome association out-of-sample",
+        "scripts": [
+          "multivariate.py --cluster"
+        ],
+        "tasks": [
+          "standardise + inspect",
+          "k sweep",
+          "stability (ARI)",
+          "profile table in SD units",
+          "outcome association"
+        ]
+      },
+      "required_vars": [
+        "age",
+        "education",
+        "ses_index",
+        "baseline_score",
+        "adherence",
+        "social_support"
+      ],
+      "falsification": "silhouette < .30 or bootstrap ARI < .60 (segments are not stable)",
+      "cost": "medium",
+      "caveat": "a clustering is a description until it predicts something outside the clustering variables",
+      "power": {
+        "n_complete": 426,
+        "note": "needs ≥ 100 per expected segment"
+      },
+      "assumption_risks": [
+        "education has few integer levels: decide ordinal vs continuous explicitly"
+      ],
+      "scores": {
+        "information": 2,
+        "feasibility": 3,
+        "robustness": 3,
+        "novelty": 3
+      },
+      "score": 2.35,
+      "id": "I7"
+    }
+  ],
+  "dropped": [
+    {
+      "title": "any idea using a derived score as a mediator, moderator or predictor",
+      "why": "change_score is mathematically derived from the outcome (flagged by the redundancy scan); using it as a predictor of that outcome is a tautology, not a mechanism"
+    }
+  ]
+}

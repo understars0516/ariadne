@@ -1,0 +1,296 @@
+[
+  {
+    "id": "F001",
+    "type": "association",
+    "status": "confirmatory-after-FDR",
+    "statement": "post_score ~ site (Kruskal-Wallis H (non-normal groups))",
+    "evidence": {
+      "p": 0.0,
+      "p_fdr": 0.0,
+      "effect": 0.23961576630651146,
+      "effect_kind": "epsilon2",
+      "n": 411
+    },
+    "family": "outcome::post_score"
+  },
+  {
+    "id": "F002",
+    "type": "association",
+    "status": "confirmatory-after-FDR",
+    "statement": "post_score ~ adherence (Pearson r (monotonic check: Spearman))",
+    "evidence": {
+      "p": 2.6370438401392977e-06,
+      "p_fdr": 1.2306204587316722e-05,
+      "effect": -0.22930166205610375,
+      "effect_kind": "r",
+      "n": 411
+    },
+    "family": "outcome::post_score"
+  },
+  {
+    "id": "F003",
+    "type": "association",
+    "status": "confirmatory-after-FDR",
+    "statement": "post_score ~ baseline_score (Pearson r (monotonic check: Spearman))",
+    "evidence": {
+      "p": 0.00010602950826084718,
+      "p_fdr": 0.00037110327891296517,
+      "effect": 0.19004039672122633,
+      "effect_kind": "r",
+      "n": 411
+    },
+    "family": "outcome::post_score"
+  },
+  {
+    "id": "F004",
+    "type": "association",
+    "status": "confirmatory-after-FDR",
+    "statement": "site ~ change_score (Kruskal-Wallis H (non-normal groups))",
+    "evidence": {
+      "p": 0.0,
+      "p_fdr": 0.0,
+      "effect": 0.26845012453537836,
+      "effect_kind": "epsilon2",
+      "n": 411
+    },
+    "family": "all_pairs"
+  },
+  {
+    "id": "F005",
+    "type": "association",
+    "status": "confirmatory-after-FDR",
+    "statement": "arm ~ adherence (One-way ANOVA)",
+    "evidence": {
+      "p": 3.312403493949446e-09,
+      "p_fdr": 8.695059171617296e-08,
+      "effect": 0.09546802464351543,
+      "effect_kind": "eta2",
+      "n": 426
+    },
+    "family": "all_pairs"
+  },
+  {
+    "id": "F006",
+    "type": "association",
+    "status": "confirmatory-after-FDR",
+    "statement": "social_support ~ remission (Independent samples t-test)",
+    "evidence": {
+      "p": 7.0114986189546e-07,
+      "p_fdr": 1.4724147099804661e-05,
+      "effect": 0.5335015302648997,
+      "effect_kind": "d",
+      "n": 426
+    },
+    "family": "all_pairs"
+  },
+  {
+    "id": "F007",
+    "type": "association",
+    "status": "confirmatory-after-FDR",
+    "statement": "change_score ~ adherence (Pearson r (monotonic check: Spearman))",
+    "evidence": {
+      "p": 2.937006711565497e-06,
+      "p_fdr": 4.4055100673482453e-05,
+      "effect": -0.22825338490472435,
+      "effect_kind": "r",
+      "n": 411
+    },
+    "family": "all_pairs"
+  },
+  {
+    "id": "F008",
+    "type": "association",
+    "status": "confirmatory-after-FDR",
+    "statement": "baseline_score ~ remission (Mann-Whitney U (non-normal groups))",
+    "evidence": {
+      "p": 0.0005127313867649974,
+      "p_fdr": 0.00598186617892497,
+      "effect": 0.2127037632001686,
+      "effect_kind": "rank_r",
+      "n": 426
+    },
+    "family": "all_pairs"
+  },
+  {
+    "id": "F009",
+    "type": "association",
+    "status": "confirmatory-after-FDR",
+    "statement": "education ~ ses_index (Pearson r (monotonic check: Spearman))",
+    "evidence": {
+      "p": 0.0019361198609464262,
+      "p_fdr": 0.020329258539937476,
+      "effect": 0.14978072173217266,
+      "effect_kind": "r",
+      "n": 426
+    },
+    "family": "all_pairs"
+  },
+  {
+    "id": "F010",
+    "type": "association",
+    "status": "exploratory-only",
+    "statement": "adherence ~ satisfaction (Pearson r (monotonic check: Spearman))",
+    "evidence": {
+      "p": 0.00915890013554716,
+      "p_fdr": 0.08742586493022288,
+      "effect": 0.12613024816666776
+    },
+    "note": "survived no multiplicity correction; report only as a hypothesis"
+  },
+  {
+    "id": "F011",
+    "type": "association",
+    "status": "exploratory-only",
+    "statement": "sex ~ social_support (One-way ANOVA)",
+    "evidence": {
+      "p": 0.026563646084990976,
+      "p_fdr": 0.21633327458185653,
+      "effect": 0.017671052916619117
+    },
+    "note": "survived no multiplicity correction; report only as a hypothesis"
+  },
+  {
+    "id": "F012",
+    "type": "association",
+    "status": "exploratory-only",
+    "statement": "age ~ baseline_score (Pearson r (monotonic check: Spearman))",
+    "evidence": {
+      "p": 0.02678411971013462,
+      "p_fdr": 0.21633327458185653,
+      "effect": -0.107305436271524
+    },
+    "note": "survived no multiplicity correction; report only as a hypothesis"
+  },
+  {
+    "id": "F013",
+    "type": "association",
+    "status": "exploratory-only",
+    "statement": "adherence ~ remission (Independent samples t-test)",
+    "evidence": {
+      "p": 0.043309276759847616,
+      "p_fdr": 0.3248195756988571,
+      "effect": -0.2146722725077422
+    },
+    "note": "survived no multiplicity correction; report only as a hypothesis"
+  },
+  {
+    "id": "F014",
+    "type": "redundancy",
+    "status": "not-a-finding",
+    "statement": "post_score vs change_score: near-perfect numeric relation",
+    "evidence": {
+      "evidence": "r = 0.9906"
+    },
+    "note": "one is very likely derived from the other; do not treat as independent evidence"
+  },
+  {
+    "id": "F015",
+    "type": "model-coefficient",
+    "status": "confirmatory",
+    "statement": "adherence in the regression model for the outcome [logit_model]",
+    "evidence": {
+      "b": 1.2961231902473993,
+      "se": 0.5753686208312278,
+      "p": 0.024279134879594544,
+      "ci95": null,
+      "OR": 3.655099041043732
+    }
+  },
+  {
+    "id": "F016",
+    "type": "model-coefficient",
+    "status": "confirmatory",
+    "statement": "social_support in the regression model for the outcome [logit_model]",
+    "evidence": {
+      "b": -0.618864908600528,
+      "se": 0.12402317646789911,
+      "p": 6.040637114956837e-07,
+      "ci95": null,
+      "OR": 0.5385554003828865
+    }
+  },
+  {
+    "id": "F017",
+    "type": "model-coefficient",
+    "status": "confirmatory",
+    "statement": "ses_index in the regression model for the outcome [logit_model]",
+    "evidence": {
+      "b": 0.32351433487606207,
+      "se": 0.13636839517294302,
+      "p": 0.017675067374375075,
+      "ci95": null,
+      "OR": 1.3819759665802438
+    }
+  },
+  {
+    "id": "F018",
+    "type": "model-coefficient",
+    "status": "confirmatory",
+    "statement": "adherence in the regression model for the outcome [run_model]",
+    "evidence": {
+      "b": -35.444325921996665,
+      "se": 7.52891559177235,
+      "p": 3.4422204321795437e-06,
+      "ci95": [
+        -50.2448502297953,
+        -20.643801614198033
+      ],
+      "OR": null
+    }
+  },
+  {
+    "id": "F019",
+    "type": "model-coefficient",
+    "status": "confirmatory",
+    "statement": "baseline_score in the regression model for the outcome [run_model]",
+    "evidence": {
+      "b": 1.10536092899223,
+      "se": 0.27638052192452706,
+      "p": 7.54491291577518e-05,
+      "ci95": [
+        0.5620454165409753,
+        1.6486764414434845
+      ],
+      "OR": null
+    }
+  },
+  {
+    "id": "F020",
+    "type": "model-coefficient",
+    "status": "null-result",
+    "statement": "age in the regression model for the outcome [run_model]",
+    "evidence": {
+      "b": 0.11582310294244598,
+      "se": 0.1483455854401241,
+      "p": 0.43539546362235115,
+      "ci95": [
+        -0.17579823568174235,
+        0.4074444415666343
+      ],
+      "OR": null
+    }
+  },
+  {
+    "id": "F021",
+    "type": "model-coefficient",
+    "status": "null-result",
+    "statement": "ses_index in the regression model for the outcome [run_model]",
+    "evidence": {
+      "b": 1.8917162037989066,
+      "se": 1.796851544961993,
+      "p": 0.29306115243205133,
+      "ci95": [
+        -1.6405780083686448,
+        5.424010415966458
+      ],
+      "OR": null
+    }
+  },
+  {
+    "id": "F022",
+    "type": "data-quality",
+    "status": "blocker",
+    "statement": "study_phase is constant -- drop it before modelling",
+    "evidence": {}
+  }
+]

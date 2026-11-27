@@ -1,0 +1,232 @@
+{
+  "skill_name": "ariadne",
+  "notes": "Test prompts for the evaluation loop. Each prompt is what a real user would type. The baseline for comparison is a fresh agent given the same prompt with no skill. Run with-skill and without-skill in the same round, grade each run against that eval's assertions, and read the transcripts -- the failure mode to watch for is an agent that answers the question competently but skips profiling, effect sizes, multiplicity or the diagnostic gate.",
+  "evals": [
+    {
+      "id": 1,
+      "name": "vague-open-ended",
+      "prompt": "我有一批数据在 data/study.csv，我想用它做研究，但不知道该怎么分析。你帮我看看能分析出什么。",
+      "expected_output": "Runs the profiler first and reports the data's grain, scales, missingness and defects before proposing any analysis; produces a data dictionary, then a complete association scan with FDR; states what the data can and cannot answer; does not jump straight to a t-test.",
+      "files": [
+        "data/study.csv"
+      ],
+      "assertions": [
+        "profile output or equivalent column-by-column summary is produced before any test",
+        "grain (what one row represents) is stated explicitly",
+        "missingness and at least one defect class (sentinel/duplicate/constant/skew) are reported",
+        "more than 5 associations tested, with multiplicity noted",
+        "effect sizes reported alongside p-values",
+        "a statement of what the data cannot answer is present"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "single-method-request",
+      "prompt": "帮我用t检验比较一下 treatment 组和 control 组在 score 上的差异，p小于0.05就算显著。",
+      "expected_output": "Honours the t-test request but first checks normality and variance homogeneity, switches to Welch/Mann-Whitney with an explanation if assumptions fail, reports Cohen's d with a CI, and warns that 'p<0.05 = significant' is a threshold convention rather than a substantive conclusion.",
+      "files": [
+        "data/experiment.csv"
+      ],
+      "assertions": [
+        "normality and homogeneity are checked before reporting the t-test",
+        "an effect size (d or rank-biserial) is reported",
+        "the test chosen is justified by the assumption checks",
+        "a confidence interval for the difference or effect is reported",
+        "the report does not treat p<0.05 as proof of a substantive effect"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "fishing-for-significance",
+      "prompt": "我这有30个变量，你帮我把跟 outcome 相关的都找出来，只告诉我显著的那些就行。",
+      "expected_output": "Runs the complete scan, reports the full inventory with FDR-adjusted p-values, explains the false-positive inflation that 'only the significant ones' would cause, and marks which findings are exploratory rather than confirmed. Complies with the user's format preference while keeping the unconfirmed results visible.",
+      "files": [
+        "data/survey.csv"
+      ],
+      "assertions": [
+        "all tested pairs are reported, not only the significant ones",
+        "multiplicity correction (FDR or Bonferroni) is applied and named",
+        "the number of raw-significant vs corrected-significant findings is stated",
+        "exploratory findings are labelled as exploratory",
+        "the cost of selective reporting is explained"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "bad-data-traps",
+      "prompt": "这是我的问卷数据 data/questionnaire.csv，帮我算一下各维度的均分然后做相关分析。",
+      "expected_output": "Detects the -99 sentinel codes and recodes them before averaging; notices integer-coded categorical items; checks that the dimension items are actually reliable (alpha) before averaging them; reports the correlations with the recoding decision documented. Averaging sentinels into means would be the failure.",
+      "files": [
+        "data/questionnaire.csv"
+      ],
+      "assertions": [
+        "-99 or other sentinel values are detected and recoded to missing before means are computed",
+        "reliability (alpha or omega) is reported for the dimensions being averaged",
+        "the recoding decision is stated explicitly",
+        "correlations are reported with n and an effect-size interpretation",
+        "ordinal/Likert treatment is discussed"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "null-result-interpretation",
+      "prompt": "我跑了回归，干预组和对照组没有显著差异，p=0.21。是不是说明干预没用？",
+      "expected_output": "Refuses the 'no effect' interpretation: reports the estimate with its CI, computes the minimum detectable effect at the achieved N, explains that a null result is 'we could not detect an effect of this size or smaller', and checks whether the test was adequately powered.",
+      "files": [],
+      "assertions": [
+        "does not accept 'no significant difference = no effect'",
+        "reports or asks for the effect estimate with a confidence interval",
+        "mentions power or minimum detectable effect",
+        "distinguishes 'no evidence of effect' from 'evidence of no effect'"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "causal-overreach",
+      "prompt": "从这个横断面数据看，运动量是不是导致了抑郁分数下降？帮我证明一下。",
+      "expected_output": "Explains that cross-sectional data cannot support a causal claim, offers the association analysis with appropriate conditional language, discusses confounding, and suggests what design would be needed for the causal claim. Does not produce a 'proof'.",
+      "files": [
+        "data/crosssectional.csv"
+      ],
+      "assertions": [
+        "refuses causal language for a cross-sectional design",
+        "offers the association analysis with conditional wording",
+        "names at least one plausible alternative explanation (confounding/reverse causation)",
+        "suggests what design would support the causal claim"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "write-it-up",
+      "prompt": "分析做完了，结果在这个文件夹里。帮我写一份能交给导师的报告，要APA格式的表格和结果段落。",
+      "expected_output": "Waterfalls the existing artifacts into APA tables with notes, generates result paragraphs, keeps confirmatory and exploratory findings separate, includes a limitations section that states the direction of bias, and produces a reproducibility manifest.",
+      "files": [
+        "out/"
+      ],
+      "assertions": [
+        "APA-style tables produced with notes defining abbreviations",
+        "result paragraphs contain statistics, effect sizes and CIs",
+        "confirmatory and exploratory findings are separated",
+        "a limitations section is present",
+        "a reproducibility artifact (manifest/hashes/versions) is present"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "metric-investigation",
+      "prompt": "上周我们的下单转化率从4.2%掉到3.5%，老板要我今天给个说法。数据在 orders.csv。",
+      "expected_output": "Follows the root-cause sequence: validates the change against historical variation, decomposes by dimension with contributions ranked by absolute impact (not percentage change), checks boring explanations first (tracking change, holiday, one large customer), and quantifies the driver's share of the change.",
+      "files": [
+        "data/orders.csv"
+      ],
+      "assertions": [
+        "the change is validated against normal variation before attributing a cause",
+        "decomposition or drill-down by at least one dimension is performed",
+        "contributors are ranked by absolute contribution, not percentage change",
+        "at least one data-quality or instrumentation explanation is considered",
+        "the driver's share of the change is quantified"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "plan-before-data",
+      "prompt": "我要做一个干预研究，还没开始收数据。样本量该收多少？我想检测中等效应。",
+      "expected_output": "Asks for or states the design, primary outcome, effect size basis, alpha and power; computes N with attrition inflation; explains that 'medium effect' defaults are a last resort and the smallest meaningful effect is better; notes the analysis that will be run.",
+      "files": [],
+      "assertions": [
+        "alpha and power are stated explicitly",
+        "attrition inflation is applied",
+        "the effect-size choice is interrogated rather than defaulted silently",
+        "the resulting N is reported per group and in total"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "review-existing-analysis",
+      "prompt": "同事做的这个分析要发论文了，你帮我把把关，看看有没有问题。",
+      "expected_output": "Works through the QA gate: test-scale alignment, assumption checks, multiplicity, missing data, causal language, effect sizes and CIs, N reconciliation, reproducibility. Produces must-fix / should-fix / optional feedback, specific rather than 'this is unclear'.",
+      "files": [
+        "paper_draft/"
+      ],
+      "assertions": [
+        "checks whether the test matches the measurement scale",
+        "checks multiplicity and missing-data handling",
+        "flags causal language that the design cannot support",
+        "gives feedback categorised by severity (must-fix/should-fix/optional)",
+        "at least one check concerns reproducibility"
+      ]
+    },
+    {
+      "id": 11,
+      "name": "ideation-after-analysis",
+      "prompt": "数据我分析完了，结果在 out 文件夹里。我接下来该研究什么？帮我头脑风暴一下，多给几个想法我来挑。",
+      "expected_output": "Generates ideas anchored to the actual findings (scan rows / ledger IDs), presents 3-7 (not 20), each with estimand, required analysis, computed feasibility (N, power, MDE), falsification criterion and caveat; names one recommendation with the reason and the main risk; lists what it rejected and why; asks which to plan and stops -- no code.",
+      "files": [
+        "out/"
+      ],
+      "assertions": [
+        "ideas cite specific findings rather than being generic",
+        "between 3 and 7 ideas presented",
+        "each idea states what would falsify it",
+        "feasibility (power/MDE/N) is stated per idea, not assumed",
+        "one recommendation is made with a reason",
+        "rejected ideas are listed with reasons",
+        "the agent asks the user to choose and does not start implementing"
+      ]
+    },
+    {
+      "id": 12,
+      "name": "plan-from-approved-idea",
+      "prompt": "就选 I1 吧。帮我写个计划，我想看看你打算怎么做，靠谱的话就开始。",
+      "expected_output": "Writes an executable plan: estimand, global constraints (alpha, multiplicity family, no HARKing), Review Focus failure modes, declared outputs, and tasks whose steps write the check, run it to confirm the expected failure, implement, run it to confirm it passes, then commit. Includes a known-answer check (simulate a known effect, prove recovery). Presents the five judgeable questions and waits for approval before any code.",
+      "files": [
+        "out/ideas.json"
+      ],
+      "assertions": [
+        "plan states the estimand explicitly",
+        "plan includes a known-answer / simulation-based verification task",
+        "plan has a Review Focus section naming failure modes",
+        "plan declares the multiplicity family and alpha",
+        "plan declares its output artifacts",
+        "the agent asks for approval before writing analysis code"
+      ]
+    },
+    {
+      "id": 13,
+      "name": "execute-then-conclude-with-evidence",
+      "prompt": "计划我看过了，没问题，开始吧。做完给我结论。",
+      "expected_output": "Implements task by task keeping a ledger with rulings for any deviation; verifies each step against expected output; runs the evidence gate before concluding (and reports BLOCKED if unfinished); then writes a conclusion whose claims each cite an artifact, includes null results with their MDE, states the direction of residual bias, what would overturn it, and what was not answered.",
+      "files": [
+        "analyses/"
+      ],
+      "assertions": [
+        "a ledger is maintained with rulings for deviations",
+        "steps are verified against expected output, not assumed",
+        "the evidence gate is run before concluding",
+        "every claim in the conclusion cites an artifact path",
+        "null results appear with their MDE",
+        "limitations state the direction of likely bias",
+        "the conclusion says what would overturn the finding"
+      ]
+    },
+    {
+      "id": 14,
+      "name": "publication-figures",
+      "prompt": "结果我都分析完了，现在要投 Nature 子刊。帮我把图做出来，要求能直接投稿，别被打回来。",
+      "expected_output": "Asks which journal/span (or applies a named preset), draws at the final printed width, uses a colour-blind-safe palette with a second encoding channel, shows the distribution rather than a bare mean bar when groups are small, exports vector PDF+SVG plus PNG and a grayscale copy, states n and the uncertainty type in each caption, and runs the compliance audit to a PASS. Intervenes if the requested form would mislead.",
+      "files": [
+        "out/"
+      ],
+      "assertions": [
+        "figure dimensions match the journal's column width, not a default 6.4x4.8",
+        "vector format exported (PDF/SVG), not JPEG",
+        "colour-blind-safe palette plus a redundant encoding channel",
+        "small groups shown as individual points or a distribution, not a bare mean bar",
+        "grayscale preview produced or greyscale readability addressed",
+        "every caption states n and the uncertainty type",
+        "the figure compliance audit was run and reported (PASS/WARN/FAIL)",
+        "misleading requests are flagged with an alternative before drawing"
+      ]
+    }
+  ]
+}

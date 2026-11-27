@@ -1,0 +1,28 @@
+# Optional dependencies -- each buys rendering, auditing or cross-checking, never analysis.
+# Without them the skill runs; figures become specifications and exports fall back to Markdown.
+# Verify what is present with:  python scripts/check_env.py
+
+# --- publication figures ---------------------------------------------------
+# Rendering. Without it figures.py writes a figure specification instead of an image.
+matplotlib>=3.7
+# Density/violin helpers used by the figure recipes (optional; matplotlib alone is enough)
+seaborn>=0.13
+# Grayscale preview + DPI/size audit in check_figure.py
+Pillow>=10.0
+# PDF font-embedding audit (Type 3 rejection is the most common vector-file failure)
+pypdf>=4.0
+# Optional: styles closer to journal templates. Absent is fine; the built-in presets apply.
+SciencePlots>=2.1
+
+# --- tables and data exchange ---------------------------------------------
+# Excel export of APA tables (without it: Markdown tables only)
+openpyxl>=3.1
+# Parquet input/output
+pyarrow>=14
+
+# --- cross-checking the bundled engine against reference implementations ---
+# None of these are needed to run an analysis; they make tests/validate_against_scipy.py complete.
+scipy>=1.10
+statsmodels>=0.14
+scikit-learn>=1.3
+lifelines>=0.27

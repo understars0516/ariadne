@@ -1,0 +1,4 @@
+# Core dependencies for the ariadne skill -- everything the analysis itself needs.
+# Verify with:  python scripts/check_env.py
+pandas>=2.0
+numpy>=1.24

@@ -1,0 +1,203 @@
+{
+  "verdict": "READY",
+  "interpreter": {
+    "version": "3.11.5",
+    "meets_minimum": true,
+    "minimum": "3.9",
+    "implementation": "CPython",
+    "executable": "C:\\Users\\NiSl\\miniconda3\\python.exe",
+    "in_virtualenv": false,
+    "conda_env": null,
+    "platform": "Windows-10-10.0.19045-SP0",
+    "is_64bit": true
+  },
+  "required": {
+    "pandas": {
+      "present": true,
+      "version": "2.3.1",
+      "purpose": "data frames for every script"
+    },
+    "numpy": {
+      "present": true,
+      "version": "1.26.4",
+      "purpose": "numerics for the engine"
+    }
+  },
+  "optional": {
+    "matplotlib": {
+      "present": true,
+      "version": "3.10.5",
+      "unlocks": "rendered PNG figures",
+      "if_absent": "figures.py degrades to a written figure specification"
+    },
+    "openpyxl": {
+      "present": true,
+      "version": "3.1.5",
+      "unlocks": "Excel .xlsx export of APA tables",
+      "if_absent": "apa_tables.py writes Markdown only"
+    },
+    "scipy": {
+      "present": true,
+      "version": null,
+      "unlocks": "cross-checking the engine against scipy",
+      "if_absent": "tests/validate_against_scipy.py is skipped"
+    },
+    "statsmodels": {
+      "present": true,
+      "version": "0.14.1",
+      "unlocks": "regression cross-checks and FDR reference",
+      "if_absent": "part of the validation suite is skipped"
+    },
+    "sklearn": {
+      "present": true,
+      "version": null,
+      "unlocks": "PCA/ROC cross-checks",
+      "if_absent": "cross-checks only; the engine implements both"
+    },
+    "lifelines": {
+      "present": false,
+      "version": null,
+      "unlocks": "Kaplan-Meier cross-check",
+      "if_absent": "survival cross-check is skipped"
+    },
+    "pyarrow": {
+      "present": true,
+      "version": "16.1.0",
+      "unlocks": "Parquet input/output",
+      "if_absent": "Parquet files cannot be read"
+    },
+    "PIL": {
+      "present": true,
+      "version": null,
+      "unlocks": "figure DPI audit and grayscale preview",
+      "if_absent": "figure audit skips DPI/size checks"
+    },
+    "pypdf": {
+      "present": false,
+      "version": null,
+      "unlocks": "PDF font-embedding audit",
+      "if_absent": "Type 3 font check is skipped"
+    }
+  },
+  "engine": {
+    "available": true,
+    "checks": [
+      {
+        "check": "norm_cdf(0) = 0.5",
+        "got": 0.5,
+        "want": 0.5,
+        "tolerance": 1e-12,
+        "passed": true
+      },
+      {
+        "check": "norm_cdf(1.959963984540054) = 0.975",
+        "got": 0.9749999999999999,
+        "want": 0.975,
+        "tolerance": 1e-09,
+        "passed": true
+      },
+      {
+        "check": "t_ppf(.975, 10) = 2.228138852",
+        "got": 2.228138851986272,
+        "want": 2.228138852,
+        "tolerance": 1e-06,
+        "passed": true
+      },
+      {
+        "check": "chi2_sf(3.841458820694124, 1) = .05",
+        "got": 0.050000000000000044,
+        "want": 0.05,
+        "tolerance": 1e-09,
+        "passed": true
+      },
+      {
+        "check": "f_sf(1.0, 1, 1) = 0.5",
+        "got": 0.5000000000000008,
+        "want": 0.5,
+        "tolerance": 1e-09,
+        "passed": true
+      },
+      {
+        "check": "t-test on fixed vectors: t",
+        "got": -1.8973665961010275,
+        "want": -1.8973665961010275,
+        "tolerance": 1e-09,
+        "passed": true
+      },
+      {
+        "check": "t-test on fixed vectors: df",
+        "got": 8.0,
+        "want": 8.0,
+        "tolerance": 1e-12,
+        "passed": true
+      },
+      {
+        "check": "OLS slope on y = 2 + 3x",
+        "got": 2.999999999999999,
+        "want": 3.0,
+        "tolerance": 1e-09,
+        "passed": true
+      },
+      {
+        "check": "OLS intercept on y = 2 + 3x",
+        "got": 2.000000000000006,
+        "want": 2.0,
+        "tolerance": 1e-09,
+        "passed": true
+      },
+      {
+        "check": "OLS R2 on a perfect line",
+        "got": 1.0,
+        "want": 1.0,
+        "tolerance": 1e-09,
+        "passed": true
+      },
+      {
+        "check": "BH-FDR is monotone",
+        "got": "[0.04, 0.04, 0.04, 0.4]",
+        "want": "monotone",
+        "passed": true
+      },
+      {
+        "check": "n_ttest(d=0.5) = 64",
+        "got": 64,
+        "want": 64,
+        "passed": true
+      }
+    ],
+    "passed": true,
+    "n_checks": 12,
+    "failed": []
+  },
+  "filesystem": {
+    "temp_writable": true,
+    "output_writable": true,
+    "output_dir": null,
+    "free_gb": 101.4
+  },
+  "console": {
+    "stdout_encoding": "utf-8",
+    "utf8": true,
+    "note": ""
+  },
+  "scripts": {
+    "directory": "C:\\Users\\NiSl\\Downloads\\skills\\ariadne\\scripts",
+    "n_scripts": 15,
+    "missing": [],
+    "complete": true
+  },
+  "capabilities": {
+    "inference": true,
+    "figures": "rendered PNG/PDF/SVG at journal size",
+    "figure_grayscale_check": "yes",
+    "figure_dpi_audit": "yes",
+    "figure_font_audit": "no (needs pypdf)",
+    "excel_export": "xlsx",
+    "parquet_io": "supported",
+    "engine_cross_check": "scipy + statsmodels"
+  },
+  "blockers": [],
+  "warnings": [],
+  "fix_commands": [],
+  "generated_by": "scripts/check_env.py"
+}

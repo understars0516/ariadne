@@ -1,0 +1,15 @@
+{
+  "idea_id": "I1",
+  "title": "Is the absent arm effect a true null, or an insensitive test?",
+  "estimand": "the confidence interval for the arm effect, and the equivalence bound the data can support",
+  "evidence": [
+    {
+      "source": "scan",
+      "detail": "arm ~ post_score is not among the confirmed or raw-significant pairs; check the scan inventory for its exact estimate"
+    }
+  ],
+  "caveat": "this reframes a null as a bounded estimate; it cannot prove absence of effect, only exclude effects larger than the bound",
+  "approved": false,
+  "goal": "explain",
+  "secondary": []
+}

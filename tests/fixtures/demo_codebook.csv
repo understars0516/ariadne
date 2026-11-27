@@ -1,0 +1,19 @@
+column,description,measurement_scale
+participant_id,Participant identifier,id
+site,Study site (12 sites),nominal
+arm,Randomised arm: control / brief / full,nominal
+enrol_date,Enrolment date,date
+age,Age in years at enrolment,scale
+sex,Recorded sex,nominal
+education,Highest education: 1 primary .. 4 postgraduate,ordinal
+ses_index,Standardised socioeconomic index,scale
+baseline_score,Symptom score at baseline (log-normal),scale
+post_score,Symptom score at 12 weeks,scale
+change_score,post_score - baseline_score,scale
+adherence,Programme adherence proportion 0-1,scale
+social_support,Social support z-score,scale
+remission,1 = remitted at 12 weeks,binary
+sessions_attended,Sessions attended (count; -99 = unknown),count
+satisfaction,Satisfaction 1-5,ordinal
+study_phase,Study phase label,nominal
+notes_code,Free-text admin note code,text

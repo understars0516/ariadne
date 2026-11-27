@@ -1,0 +1,77 @@
+{
+  "generated": "2026-11-27 02:45 UTC",
+  "python": "3.12.14",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "input": {
+    "path": "tests\\fixtures\\demo_wide.csv",
+    "sha256_16": "6ae49ee13e2f05d4"
+  },
+  "artifacts": {
+    "model": [
+      {
+        "path": "C:\\Users\\NiSl\\AppData\\Local\\Temp\\ariadne_ex2\\run_model.json",
+        "sha256_16": "f3a02f7a83f5cbaa"
+      }
+    ],
+    "profile": [
+      {
+        "path": "C:\\Users\\NiSl\\AppData\\Local\\Temp\\ariadne_ex2\\run_profile.json",
+        "sha256_16": "01589e83688e53f4"
+      }
+    ],
+    "scan": [
+      {
+        "path": "C:\\Users\\NiSl\\AppData\\Local\\Temp\\ariadne_ex2\\run_scan.json",
+        "sha256_16": "9fda1fa977c7f39e"
+      }
+    ],
+    "model_md": {
+      "path": "C:\\Users\\NiSl\\AppData\\Local\\Temp\\ariadne_ex2\\run_model.md",
+      "sha256_16": "6041f856fb6e490a"
+    },
+    "profile_md": {
+      "path": "C:\\Users\\NiSl\\AppData\\Local\\Temp\\ariadne_ex2\\run_profile.md",
+      "sha256_16": "92583f6fe9bedcd2"
+    },
+    "scan_md": {
+      "path": "C:\\Users\\NiSl\\AppData\\Local\\Temp\\ariadne_ex2\\run_scan.md",
+      "sha256_16": "0e59ed890f90a839"
+    }
+  },
+  "scripts": [
+    "_cli.py",
+    "_dsp_stats.py",
+    "apa_tables.py",
+    "check_env.py",
+    "figures.py",
+    "get_ideas.py",
+    "info_scan.py",
+    "model_fit.py",
+    "multivariate.py",
+    "plan_analysis.py",
+    "power.py",
+    "profile_data.py",
+    "report_builder.py"
+  ],
+  "finding_count": 10,
+  "environment": {
+    "verdict": "DEGRADED",
+    "python": "3.12.14",
+    "executable": "C:\\Users\\NiSl\\.dsh\\dsh-runtimes\\dsh-primary-runtime\\dependencies\\python\\python.exe",
+    "virtualenv": false,
+    "conda_env": null,
+    "packages": {
+      "pandas": "3.0.1",
+      "numpy": "2.3.5",
+      "openpyxl": "3.1.5"
+    },
+    "capabilities": {
+      "inference": true,
+      "figures": "specification only",
+      "excel_export": "xlsx",
+      "parquet_io": "unsupported",
+      "engine_cross_check": "unavailable"
+    },
+    "engine_self_test_passed": true
+  }
+}

@@ -1,0 +1,10 @@
+# Keep the working tree byte-identical across platforms: LF everywhere for text,
+# explicit binary markers so figures are never re-encoded.
+* text=auto eol=lf
+
+*.png binary
+*.pdf binary
+*.jpg binary
+*.jpeg binary
+*.xlsx binary
+*.zip binary
