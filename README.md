@@ -1,5 +1,7 @@
 # Ariadne — Data Analysis & Research Studio
 
+> **English** | [中文](README.zh-CN.md)
+
 A complete, research-grade analysis capability for tabular data — from "what is in this file"
 to a report a reviewer can accept, and then from "what should we ask next?" to a conclusion
 that traces to evidence.
